@@ -1,5 +1,11 @@
 # UnitTest.TestBuilder.FakeItEasy
 
+### Introduction
+
+This is a concrete implementation of a test builder for [FakeItEasy](https://fakeiteasy.github.io) based on [UnitTest.TestBuilder.Core](https://github.com/Jacky-Mo/UnitTest.TestBuilder.Core)
+
+Please visit the repository to see implementations for other test frameworks.
+
 #### Description
 This is a test library that helps to write unit tests faster by abstractin out the boilerplate codes and let the developers focus on the actual logics of the unit tests instead.
 
@@ -154,4 +160,4 @@ public class TestClass
 
 <br>
 <br>
-Last Updated: Jan-12-2020
+Last Updated: Jan-13-2020 (Jacky-Mo)
