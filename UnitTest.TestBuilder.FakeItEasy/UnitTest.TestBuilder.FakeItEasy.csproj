@@ -7,12 +7,13 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/Jacky-Mo/UnitTest.TestBuilder.FakeItEasy</RepositoryUrl>
-    <PackageTags>unittest;testbuilder;fakeiteasy,builder;builder-pattern</PackageTags>
+    <PackageTags>unittest, testbuilder, fakeiteasy, builder, builder-pattern</PackageTags>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="5.5.0" />
-    <PackageReference Include="UnitTest.TestBuilder.Core" Version="1.0.1" />
+    <PackageReference Include="UnitTest.TestBuilder.Core" Version="1.1.0" />
   </ItemGroup>
 
 </Project>

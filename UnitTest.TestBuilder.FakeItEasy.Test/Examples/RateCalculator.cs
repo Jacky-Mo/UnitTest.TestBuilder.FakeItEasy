@@ -8,20 +8,21 @@
     public class RateCalculator
     {
         private readonly IRateService _rateService;
-
-        public RateCalculator(IRateService rateService)
+        public DefaultSetting DefaultSetting { get; }
+        public RateCalculator(IRateService rateService, DefaultSetting setting)
         {
             _rateService = rateService;
+            DefaultSetting = setting;
         }
 
         public double GetTodayRate()
         {
-            return 2 * _rateService.GetRate();
+            return DefaultSetting.DefaultTodayRateFactor * _rateService.GetRate();
         }
 
         public double GetTomorrowRate()
         {
-            return 3 * _rateService.GetRate();
+            return DefaultSetting.DefaultTomorrowRateFactor * _rateService.GetRate();
         }
     }
 }

@@ -17,7 +17,7 @@ public class TestClass
 ```
 
 2. Define class properties in the ***Builder*** class. 
-> All reference type properties except string will be dynamically created and assigned by ***FakeItEasyBuilder***.
+> All reference type properties including string will be dynamically created and assigned by ***FakeItEasyBuilder***.
 >
 > The ***TestObject*** is created using its public constructor that has the most parameters. If the parameter is the same type as any of the properties defined
 > in the ***Builder***, the property of the ***Builder*** will be passed in as the parameter to the constructor. Hence, the ***TestObject*** will have reference
@@ -28,7 +28,7 @@ public class TestClass
 {
   private class Builder : FakeItEasyBuilder<TestObject>
   {
-       IServiceA ServiceA {get; private set;}
+       Fake<IServiceA> ServiceA {get; private set;}
   }
 }
 ```
@@ -67,6 +67,91 @@ public class TestClass
   }
 ```
 
+#### Examples
+
+> Check out the Examples in Unit Tests project for more details
+
+```C#
+    public interface IRateService
+    {
+        double GetRate();
+    }
+
+    public class RateCalculator
+    {
+        private readonly IRateService _rateService;
+
+        public RateCalculator(IRateService rateService)
+        {
+            _rateService = rateService;
+        }
+
+        public double GetTodayRate()
+        {
+            return 2 * _rateService.GetRate();
+        }
+
+        public double GetTomorrowRate()
+        {
+            return 3 * _rateService.GetRate();
+        }
+    }
+
+    [TestClass]
+    public class ExampleTests
+    {
+        private class Builder : FakeItEasyBuilder<RateCalculator>
+        {
+            // This property will be auto-populated by the base builder
+            public Fake<IRateService> RateService { get; private set; }
+
+            public Builder() : this(null) { }
+
+            public Builder(IContainer container) : base(container) { }
+        }
+
+        [Fact]
+        public void GetTodayRate_WithRate_ReturnCorrectRate()
+        {
+            var builder = new Builder();
+
+            //set up the getRate method to return 2
+            builder.RateService.CallsTo(a => a.GetRate()).Returns(2);
+
+            var calculator = builder.Build();
+
+            //Act
+            var result = calculator.GetTodayRate();
+
+            //Assert
+            Assert.Equal(4.0, result);
+
+            //verify RateService.GetRate() was called
+            builder.RateService.CallsTo(a => a.GetRate()).MustHaveHappened();
+        }
+
+        [Fact]
+        public void GetTomorrowRate_WithRate_ReturnCorrectRate()
+        {
+            var builder = new Builder();
+
+            //set up the getRate method to return 2
+            builder.RateService.CallsTo(a => a.GetRate()).Returns(2);
+
+            var calculator = builder.Build();
+
+            //Act
+            var result = calculator.GetTomorrowRate();
+
+            //Assert
+            Assert.Equal(6.0, result);
+
+            //verify RateService.GetRate() was called
+            builder.RateService.CallsTo(a => a.GetRate()).MustHaveHappened();
+        }
+    }
+```
+
 <br>
 <br>
-Last Updated: 01/03/2020
+Last Updated: Jan-12-2020

@@ -10,13 +10,13 @@ namespace UnitTest.TestBuilder.FakeItEasy.Test
         #region CanCreate
 
         [Fact]
-        public void CanCreate_ReferenceType_ReturnTrue()
+        public void CanCreate_ReferenceType_ReturnFalse()
         {
             var builder = new ObjectBuilder();
 
             var result = builder.CanCreate(typeof(TestObject));
 
-            Assert.True(result);
+            Assert.False(result);
         }
 
         [Fact]
@@ -50,23 +50,23 @@ namespace UnitTest.TestBuilder.FakeItEasy.Test
         }
 
         [Fact]
-        public void CanCreate_RandomGenericType_ReturnTrue()
+        public void CanCreate_RandomGenericType_ReturnFalse()
         {
             var builder = new ObjectBuilder();
 
             var result = builder.CanCreate(typeof(List<ITestService>));
 
-            Assert.True(result);
+            Assert.False(result);
         }
 
         [Fact]
-        public void CanCreate_GenericTypeOfFake_ReturnFalse()
+        public void CanCreate_GenericTypeOfFake_ReturnTrue()
         {
             var builder = new ObjectBuilder();
 
             var result = builder.CanCreate(typeof(Fake<ITestService>));
 
-            Assert.False(result);
+            Assert.True(result);
         }
 
         #endregion
@@ -74,14 +74,13 @@ namespace UnitTest.TestBuilder.FakeItEasy.Test
 
         #region Create
         [Fact]
-        public void Create_ReferenceType_ReturnObject()
+        public void Create_ReferenceType_ReturnNull()
         {
             var builder = new ObjectBuilder();
 
             var result = builder.Create(typeof(TestObject));
 
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<Fake<TestObject>>(result);
+            Assert.Null(result);
         }
 
         [Fact]
@@ -112,28 +111,28 @@ namespace UnitTest.TestBuilder.FakeItEasy.Test
             var result = builder.Create(typeof(ITestService));
 
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Fake<ITestService>>(result);
+            Assert.IsAssignableFrom<ITestService>(result);
         }
 
         [Fact]
-        public void Create_RandomGenericType_ReturnObject()
+        public void Create_RandomGenericType_ReturnNull()
         {
             var builder = new ObjectBuilder();
 
             var result = builder.Create(typeof(List<ITestService>));
 
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<Fake<List<ITestService>>>(result);
+            Assert.Null(result);
         }
 
         [Fact]
-        public void Create_GenericTypeOfFake_ReturnNull()
+        public void Create_GenericTypeOfFake_ReturnObject()
         {
             var builder = new ObjectBuilder();
 
             var result = builder.Create(typeof(Fake<ITestService>));
 
-            Assert.Null(result);
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<Fake<ITestService>>(result);
         }
         #endregion
     }
